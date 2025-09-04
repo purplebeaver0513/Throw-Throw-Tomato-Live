@@ -3,8 +3,8 @@
  *************************/
 
 /** ============================
- *  ASSETS
- *  ============================ */
+ * ASSETS
+ * ============================ */
 const ASSETS = {
   // Main menu background (applied to #mainMenu overlay)
   menuFullBg: "https://raw.githubusercontent.com/purplebeaver0513/Throw-Throw-Tomato-Assets/refs/heads/main/1000025560.png",
@@ -22,12 +22,12 @@ const ASSETS = {
   // Targets (same size across tiers)
   targetYellow: "https://raw.githubusercontent.com/purplebeaver0513/Throw-Throw-Tomato-Assets/refs/heads/main/1000025399-removebg-preview.png",
   targetOrange: "https://raw.githubusercontent.com/purplebeaver0513/Throw-Throw-Tomato-Assets/refs/heads/main/1000025398-removebg-preview.png",
-  targetRed:    "https://raw.githubusercontent.com/purplebeaver0513/Throw-Throw-Tomato-Assets/refs/heads/main/1000025397-removebg-preview.png",
+  targetRed: "https://raw.githubusercontent.com/purplebeaver0513/Throw-Throw-Tomato-Assets/refs/heads/main/1000025397-removebg-preview.png",
 };
 
 /** ============================
- *  IMAGE PRELOAD (CORS-safe)
- *  ============================ */
+ * IMAGE PRELOAD (CORS-safe)
+ * ============================ */
 let IMGS = null;
 function loadImages(manifest) {
   const entries = Object.entries(manifest);
@@ -48,57 +48,53 @@ function loadImages(manifest) {
 }
 
 /**************
- * DOM HOOKS  *
+ * DOM HOOKS *
  **************/
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-const timerDisplay      = document.getElementById('timer');
-const scoreDisplay      = document.getElementById('score');
-const pauseBtn          = document.getElementById('pauseBtn');
-const countdownDiv      = document.getElementById('countdown');
-const finalScoreDiv     = document.getElementById('finalScore');
+const timerDisplay = document.getElementById('timer');
+const scoreDisplay = document.getElementById('score');
+const pauseBtn = document.getElementById('pauseBtn');
+const countdownDiv = document.getElementById('countdown');
+const finalScoreDiv = document.getElementById('finalScore');
 
-const mainMenu          = document.getElementById('mainMenu');
-const playBtn           = document.getElementById('playBtn');
-const openScoresBtn     = document.getElementById('openScoresBtn');
+const mainMenu = document.getElementById('mainMenu');
+const playBtn = document.getElementById('playBtn');
+const openScoresBtn = document.getElementById('openScoresBtn');
 
-const highscoresScreen  = document.getElementById('highscoresScreen');
-const scoresTitle       = document.getElementById('scoresTitle');
-const scoresList        = document.getElementById('scoresList');
-const showAllTimeBtn    = document.getElementById('showAllTimeBtn');
-const scoresToMenuBtn   = document.getElementById('scoresToMenuBtn');
+const highscoresScreen = document.getElementById('highscoresScreen');
+const scoresTitle = document.getElementById('scoresTitle');
+const scoresList = document.getElementById('scoresList');
+const showAllTimeBtn = document.getElementById('showAllTimeBtn');
+const scoresToMenuBtn = document.getElementById('scoresToMenuBtn');
 
-const nameEntry         = document.getElementById('nameEntry');
-const finalScoreValue   = document.getElementById('finalScoreValue');
-const playerNameInput   = document.getElementById('playerName');
-const saveScoreBtn      = document.getElementById('saveScoreBtn');
-const cancelSaveBtn     = document.getElementById('cancelSaveBtn');
+const nameEntry = document.getElementById('nameEntry');
+const finalScoreValue = document.getElementById('finalScoreValue');
+const playerNameInput = document.getElementById('playerName');
+const saveScoreBtn = document.getElementById('saveScoreBtn');
+const cancelSaveBtn = document.getElementById('cancelSaveBtn');
 
-const toMenuOverlay     = document.getElementById('toMenuOverlay');
-const toMenuBtn         = document.getElementById('toMenuBtn');
-const finalScoreValue2  = document.getElementById('finalScoreValue2');
+const toMenuOverlay = document.getElementById('toMenuOverlay');
+const toMenuBtn = document.getElementById('toMenuBtn');
+const finalScoreValue2 = document.getElementById('finalScoreValue2');
 
-const settingsBtn       = document.getElementById('settingsBtn');
-const updateLogBtn      = document.getElementById('updateLogBtn');
-const settingsPanel     = document.getElementById('settingsPanel');
-const updateLogPanel    = document.getElementById('updateLogPanel');
-const closeSettings     = document.getElementById('closeSettings');
-const closeUpdateLog    = document.getElementById('closeUpdateLog');
+const settingsBtn = document.getElementById('settingsBtn');
+const updateLogBtn = document.getElementById('updateLogBtn');
+const settingsPanel = document.getElementById('settingsPanel');
+const updateLogPanel = document.getElementById('updateLogPanel');
+const closeSettings = document.getElementById('closeSettings');
+const closeUpdateLog = document.getElementById('closeUpdateLog');
 const musicVolumeSlider = document.getElementById('musicVolume');
-const sfxVolumeSlider   = document.getElementById('sfxVolume');
-
-// Hide any old title image if present (we use overlay bg instead)
-const titleLogoImg = document.getElementById('titleLogo');
-if (titleLogoImg) titleLogoImg.style.display = 'none';
+const sfxVolumeSlider = document.getElementById('sfxVolume');
 
 /************************
- * CANVAS SIZE (exact)  *
+ * CANVAS SIZE (exact) *
  ************************/
 const LOGICAL_W = 1800;
 const LOGICAL_H = 600;
 function setExactCanvasSize() {
   const dpr = window.devicePixelRatio || 1;
-  canvas.width  = Math.round(LOGICAL_W * dpr);
+  canvas.width = Math.round(LOGICAL_W * dpr);
   canvas.height = Math.round(LOGICAL_H * dpr);
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.imageSmoothingEnabled = true;
@@ -111,8 +107,7 @@ window.addEventListener('resize', setExactCanvasSize);
  **********************************/
 function applyMenuBackground() {
   if (!mainMenu) return;
-  mainMenu.style.backgroundImage =
-    `url('${ASSETS.menuFullBg}')`;
+  mainMenu.style.backgroundImage = `url('${ASSETS.menuFullBg}')`;
   mainMenu.style.backgroundSize = 'cover';
   mainMenu.style.backgroundRepeat = 'no-repeat';
   mainMenu.style.backgroundPosition = 'center center';
@@ -155,12 +150,12 @@ let lastHitTime = 0;
 const COMBO_TIMEOUT = 1750;
 
 /********************
- * HELPERS & SPAWN  *
+ * HELPERS & SPAWN *
  ********************/
 function randomInt(min, max) { return Math.floor(Math.random() * (max - min) + min); }
 
 // Centered spawn band
-const SPAWN_BAND_LEFT_RATIO  = 0.30;
+const SPAWN_BAND_LEFT_RATIO = 0.30;
 const SPAWN_BAND_WIDTH_RATIO = 0.40;
 
 const SPAWN_AREA_X = () =>
@@ -169,7 +164,7 @@ const SPAWN_AREA_X = () =>
 const SPAWN_AREA_W = () =>
   (canvas.width / (window.devicePixelRatio || 1)) * SPAWN_BAND_WIDTH_RATIO;
 
-const SPAWN_PAD    = 40;
+const SPAWN_PAD = 40;
 
 function buildMiddleLanes(count = 5) {
   const left = SPAWN_AREA_X() + SPAWN_PAD;
@@ -180,7 +175,7 @@ function buildMiddleLanes(count = 5) {
 }
 
 /****************
- * POPUPS / FX  *
+ * POPUPS / FX *
  ****************/
 class Popup {
   constructor(x, y, text, color = '#111') {
@@ -222,7 +217,7 @@ class Splat {
 }
 
 /****************
- * PROJECTILES  *
+ * PROJECTILES *
  ****************/
 class Tomato {
   constructor(targetX, targetY) {
@@ -322,7 +317,7 @@ class Target {
     this.points = 10;
     this.speedX = 0;
 
-    const leftInside  = SPAWN_AREA_X() + SPAWN_PAD + this.radius;
+    const leftInside = SPAWN_AREA_X() + SPAWN_PAD + this.radius;
 
     if (tier === 1) {
       const lanes = buildMiddleLanes(5);
@@ -334,7 +329,7 @@ class Target {
       this.x = leftInside; this.y = 120; this.points = 50; this.speedX = 2.1;
     }
 
-    this.leftBound  = SPAWN_AREA_X() + SPAWN_PAD - this.radius;
+    this.leftBound = SPAWN_AREA_X() + SPAWN_PAD - this.radius;
     this.rightBound = SPAWN_AREA_X() + SPAWN_AREA_W() - SPAWN_PAD + this.radius;
   }
 
@@ -364,11 +359,11 @@ class Target {
 }
 
 /***********
- * FARMER  *
+ * FARMER *
  ***********/
 class Farmer {
   constructor() {
-    const bandLeft  = SPAWN_AREA_X();
+    const bandLeft = SPAWN_AREA_X();
     const bandRight = SPAWN_AREA_X() + SPAWN_AREA_W();
 
     this.width = 140; this.height = 140;
@@ -462,7 +457,7 @@ function applyComboAndReturnPoints(basePoints, px, py) {
 }
 
 /*********************
- * BACKGROUND & HUD  *
+ * BACKGROUND & HUD *
  *********************/
 function drawBackground() {
   // fallback color while image loads
@@ -523,7 +518,7 @@ function drawComboBar() {
   ctx.textAlign = 'center';
   if (comboCount >= 5) {
     const extraPct = Math.round((getComboMultiplier() - 1) * 1000) / 10;
-    ctx.fillText(`Combo x${comboCount}  (+${extraPct}%)`, barX + barW / 2, barY + barH - 3);
+    ctx.fillText(`Combo x${comboCount} (+${extraPct}%)`, barX + barW / 2, barY + barH - 3);
   } else {
     ctx.fillText(`Combo x${comboCount}`, barX + barW / 2, barY + barH - 3);
   }
@@ -564,7 +559,7 @@ function update() {
     }
     for (const tm of tomatoes) tm.update();
     for (let i = popups.length - 1; i >= 0; i--) { const p = popups[i]; p.update(); if (p.dead) popups.splice(i,1); }
-    for (let i = splats.length - 1; i >= 0; i--) { const s = splats[i]; s.update(); if (s.dead) splats.splice(i,1); }
+    for (let i = splats.length - 1; i >=0; i--) { const s = splats[i]; s.update(); if (s.dead) splats.splice(i,1); }
   }
 
   // Draw
@@ -608,7 +603,7 @@ function update() {
  *****************/
 function startGame() {
   // Close panels, ensure HUD visible
-  if (settingsPanel)  settingsPanel.style.display = 'none';
+  if (settingsPanel) settingsPanel.style.display = 'none';
   if (updateLogPanel) updateLogPanel.style.display = 'none';
 
   // Leaving menu → remove overlay background
@@ -697,7 +692,10 @@ function endBonusRound() {
 canvas.addEventListener('click', (e) => {
   if (cooldown || isGameOver || !isGameStarted) return;
   const rect = canvas.getBoundingClientRect();
-  const x = e.clientX - rect.left, y = e.clientY - rect.top;
+  const scaleX = LOGICAL_W / rect.width;
+  const scaleY = LOGICAL_H / rect.height;
+  const x = (e.clientX - rect.left) * scaleX;
+  const y = (e.clientY - rect.top) * scaleY;
   tomatoes.push(new Tomato(x, y));
   cooldown = true; setTimeout(() => (cooldown = false), 600);
 });
@@ -716,7 +714,7 @@ closeUpdateLog.addEventListener('click', () => { updateLogPanel.style.display = 
 
 // Volume sliders (hooks)
 musicVolumeSlider.addEventListener('input', (e) => { musicVolume = parseFloat(e.target.value); });
-sfxVolumeSlider.addEventListener('input',   (e) => { sfxVolume   = parseFloat(e.target.value); });
+sfxVolumeSlider.addEventListener('input', (e) => { sfxVolume = parseFloat(e.target.value); });
 
 /*********************
  * MENU NAVIGATION UI
@@ -729,10 +727,11 @@ function setScreen(screen) {
   toMenuOverlay.classList.remove('active');
 
   // HUD
+  const uiElement = document.getElementById('ui');
   if (screen === 'game') {
-    document.getElementById('ui').classList.remove('hide');
+    uiElement.classList.remove('hide');
   } else {
-    document.getElementById('ui').classList.add('hide');
+    uiElement.classList.add('hide');
   }
 
   switch (screen) {
@@ -863,7 +862,7 @@ function renderAllTimeScores() {
 }
 
 /*****************
- * INITIAL BOOT  *
+ * INITIAL BOOT *
  *****************/
 setScreen('menu'); // applies menu background to overlay
 
@@ -873,3 +872,6 @@ setScreen('menu'); // applies menu background to overlay
   catch(err){ console.warn('[TTT] Asset load issue (using shape fallbacks):', err); }
   finally { if (playBtn) playBtn.disabled = false; }
 })();
+
+// Mark that the game has initialized for debugging
+window.gameInitialized = true;
