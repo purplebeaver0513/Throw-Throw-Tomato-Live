@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <title>Throw Throw Tomato</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
-  
 <body>
   <div class="game-container">
-    <!-- Top-left buttons -->
+    <!-- Always-visible title buttons -->
     <div id="topButtons">
-      <button id="settingsBtn">⚙️</button>
-      <button id="updateLogBtn">📜</button>
+      <button id="settingsBtn" title="Settings">⚙️</button>
+      <button id="updateLogBtn" title="Update Log">📜</button>
     </div>
 
     <!-- In-game HUD -->
     <div id="ui" class="hide">
       <div id="timer">Time: 20</div>
       <div id="score">Score: 0</div>
-      <button id="pauseBtn" type="button">Pause</button>
+      <div id="hudControls">
+        <button id="pauseBtn" type="button">Pause</button>
+        <button id="exitBtn" type="button" title="Exit to Main Menu">Exit</button>
+      </div>
     </div>
 
     <!-- Game Canvas -->
@@ -29,14 +31,15 @@
     <!-- Countdown overlay -->
     <div id="countdown"></div>
 
-    <!-- Final Score badge -->
+    <!-- Final Score badge (compat container) -->
     <div id="finalScore"></div>
 
     <!-- Main Menu -->
     <div id="mainMenu" class="overlay center-stack active">
-      <img id="titleLogo" alt="Throw Throw Tomato" src="https://raw.githubusercontent.com/purplebeaver0513/Throw-Throw-Tomato-Assets/refs/heads/main/1000025560.png" />
-      <button id="playBtn" class="primary">Play</button>
-      <button id="openScoresBtn">High Scores</button>
+      <div class="menu-stack">
+        <button id="playBtn" class="primary">Play</button>
+        <button id="openScoresBtn">High Scores</button>
+      </div>
     </div>
 
     <!-- High Scores Screen -->
@@ -61,7 +64,7 @@
       </div>
     </div>
 
-    <!-- Not on board → Main Menu button -->
+    <!-- Round Over -->
     <div id="toMenuOverlay" class="overlay center-stack">
       <h2>Round Over</h2>
       <div class="big-score">Final Score: <span id="finalScoreValue2">0</span></div>
@@ -69,34 +72,44 @@
     </div>
 
     <!-- Settings Panel -->
-    <div id="settingsPanel" class="overlay-panel">
-      <h2>Settings</h2>
-      <label>Music Volume
-        <input id="musicVolume" type="range" min="0" max="1" step="0.01" value="1">
-      </label>
-      <label>Sound Effects Volume
-        <input id="sfxVolume" type="range" min="0" max="1" step="0.01" value="1">
-      </label>
-      <button id="closeSettings">Close</button>
+    <div id="settingsPanel" class="overlay-panel" style="display:none;">
+      <div class="panel-header">
+        <h2 class="panel-title">Settings</h2>
+        <button id="closeSettingsX" class="close-x" title="Close">×</button>
+      </div>
+      <div class="panel-content">
+        <label>Music Volume
+          <input id="musicVolume" type="range" min="0" max="1" step="0.01" value="1">
+        </label>
+        <label>Sound Effects Volume
+          <input id="sfxVolume" type="range" min="0" max="1" step="0.01" value="1">
+        </label>
+      </div>
+      <div class="panel-footer">
+        <button id="closeSettings">Close</button>
+      </div>
     </div>
 
     <!-- Update Log Panel -->
-    <div id="updateLogPanel" class="overlay-panel">
-      <h2>Update Log</h2>
-      <div id="updateLogContent">
-        <p><strong>v1.0.4</strong> – Testing the new highscore. Highscores now will not be saved locally. It will be saved in the cloud </p>
-        <p><strong>v1.0.3</strong> – Added most of the visual assets to the game, fixed minor bugs, updated visual assets. </p>
-        <p><strong>v1.0.2</strong> – Added combo bar, added almost all of the visual assets even though none are being used right now. </p>
-        <p><strong>v1.0.1</strong> – Settings (music/SFX), Update Log, daily & all-time Top 10, bonus round prompt, moving targets spawn from left side, target popups, name entry flow.</p>
-        <p><strong>v1.0.0</strong> – Initial release: targets (3 tiers), tomatoes from center, bonus farmer with multipliers, green spawn band.</p>
+    <div id="updateLogPanel" class="overlay-panel" style="display:none;">
+      <div class="panel-header">
+        <h2 class="panel-title">Update Log</h2>
+        <button id="closeUpdateLogX" class="close-x" title="Close">×</button>
       </div>
-      <button id="closeUpdateLog">Close</button>
+      <div class="panel-content" id="updateLogContent">
+        <p><strong>v.1.2.4</strong> – Fixed strict‑mode crash; buttons live; title art visible; scrollable panels; big red “×”.</p>
+        <p><strong>v.1.2.2</strong> – Hardened init; z-index cleanup; countdown lock for Exit.</p>
+      </div>
+      <div class="panel-footer">
+        <button id="closeUpdateLog">Close</button>
+      </div>
     </div>
 
-    <!-- Version Number -->
-    <div id="versionLabel">v1.0.4</div>
+    <!-- Version Number (bottom-left) -->
+    <div id="versionLabel">v.1.2.4</div>
   </div>
 
-  <script src="script.js" defer></script>
+  <!-- Script at end (reliable DOM), no async/defer -->
+  <script src="script.js"></script>
 </body>
 </html>
